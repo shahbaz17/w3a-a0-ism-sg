@@ -53,6 +53,9 @@ function App() {
                 clientId: "hUVVf4SEsZT7syOiL0gLU9hFEtm2gQ6O",
               },
             },
+            whiteLabel: {
+              appName: "Web3Auth Grandma",
+            },
           },
         });
         web3auth.configureAdapter(openloginAdapter);
@@ -77,19 +80,14 @@ function App() {
       uiConsole("web3auth not initialized yet");
       return;
     }
-    const web3authProvider = await web3auth.connectTo(
-      WALLET_ADAPTERS.OPENLOGIN,
-      {
-        loginProvider: "jwt",
-        extraLoginOptions: {
-          domain: "https://web3auth.au.auth0.com",
-          verifierIdField: "sub",
-          // connection: "google-oauth2", // Use this to skip Auth0 Modal for Google login and similarly for other connections
-        },
-      }
-    );
-    setProvider(web3authProvider);
-    setLoggedIn(true);
+    await web3auth.connectTo(WALLET_ADAPTERS.OPENLOGIN, {
+      loginProvider: "jwt",
+      extraLoginOptions: {
+        domain: "https://web3auth.au.auth0.com",
+        verifierIdField: "sub",
+        // connection: "google-oauth2", // Use this to skip Auth0 Modal for Google login and similarly for other connections
+      },
+    });
   };
 
   const authenticateUser = async () => {
